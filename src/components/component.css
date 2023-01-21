@@ -1,0 +1,71 @@
+.optionSelectBox{
+    display: flex;
+    position: relative;
+}
+
+.optionSelectItem{
+    vertical-align: middle;
+}
+
+.priceInputBox{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,.1);
+    margin: 100px;
+    margin-top: 10px;
+    padding-bottom: 30px;
+}
+
+.priceInputItem{
+    margin: 20px;
+}
+
+.optionInputBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,.1);
+    margin: 100px;
+    margin-top: 10px;
+    padding: 30px;
+
+    border: 3px solid red;
+
+}
+
+.optionInputItem{
+    padding: 5px;
+}
+
+.iconBtn{
+    display: flex;
+    width: 40px;
+    height: 30px;
+    background-color: white;
+    border: none;
+    float: right;
+}
+
+.submitBtn{
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+.toolImg{
+    vertical-align:middle;
+    max-width: 25px;
+    max-height: 25px;
+    object-fit: cover;
+}
+
+.btnImg{
+    vertical-align:middle;
+    max-width: 25px;
+    max-height: 25px;
+    object-fit: cover;
+    background-color: white;
+    padding-top: 10px;
+}

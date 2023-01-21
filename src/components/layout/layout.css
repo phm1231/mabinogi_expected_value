@@ -1,0 +1,41 @@
+body {
+    text-align: center;
+    color: black;
+    width: 900px;
+}
+div#wapper {
+    width: 100vw;
+    height: 100vh;
+    text-align: left;
+    min-height: 300px;
+    margin: 0 auto;
+}
+header, footer, nav, aside, section {
+    background-color: whitesmoke
+}
+header {
+    height: 9vh;
+}
+nav, section, aside {
+    float: left;
+    height: 120vh;
+}
+nav {
+    width: 24vw;
+}
+section {
+    width: 52vw; 
+}
+aside {
+    width: 24vw; 
+}
+footer {
+    height: 9vh;
+    position: relatiev;
+    clear: both;
+}
+article {
+    width: 90%;
+    margin: 20px;
+    background-color: #999;
+}

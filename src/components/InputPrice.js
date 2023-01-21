@@ -1,22 +1,29 @@
-import React from 'react';
+import React, {useState} from "react";
+import ToolImg from '../img/toolimg.png';
+import './component.css';
 
-class OnlyInputNumber extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          empty: ''
-        }
-      }
-      
-      handleChange(evt) {
-        const empty = (evt.target.validity.valid) ? evt.target.value : this.state.empty;
-        this.setState({ empty });
-      }
-      render() {
-        return (
-          <input type="text" pattern="[0-9]*" onInput={this.handleChange.bind(this)} value={this.state.empty} />
-        )
-      }
+function InputPrice(props){
+
+  const [myV, setmyV] = useState(0);
+
+  const handleChange = (e)=>{
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    setmyV(e.target.value);
+  }
+
+  return (
+    <div className="priceInputItem">
+      <span>
+        <img className="toolImg" src={ToolImg}></img>
+        정교한 세공 도구
+      </span>
+      <br></br>
+      <input type="text" onChange={(e) =>
+        handleChange(e)
+      }/>
+    </div>
+  )
 }
 
-export default OnlyInputNumber
+
+export default InputPrice

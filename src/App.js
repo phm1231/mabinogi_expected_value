@@ -1,27 +1,22 @@
 import React from 'react';
-import InputPrice from './components/InputPrice';
-import SelectList from './components/SelectList';
-class App extends React.Component {
+import Header from './components/layout/header';
+import Footer from './components/layout/footer';
+import Section from './components/layout/section';
+import Aside from './components/layout/aside';
+import Nav from './components/layout/nav';
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            username:null,
-        };
-    }
-
-  render() {
-    return (
-        <div className="App">
-          <header className="App-header">
-            <div>
-              <InputPrice></InputPrice>
-              <SelectList title={['1234567890', 'b', 'c', 'd']}></SelectList>
-            </div>
-          </header>
-        </div>
-    );
-  }
+function App(){
+  return (
+    <div id='wapper'>
+      <Header/>
+      <Nav/>
+      <Section/>
+      <Aside/>
+      <Footer/>
+    </div>
+  )
 }
+
+
 
 export default App;

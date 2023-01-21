@@ -1,17 +1,36 @@
 import React from "react";
-import Select from "react-select";
+import Select, { components } from "react-select";
+import "./component.css"
+
 
 // props must have <value, label>
 function SelectList(props) {
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-      ]
-      
-    return(
-        // props.뭐시기 로 수정.
-        <Select options={options} />
-    )
+
+    const changeValue = (index, e) =>{
+        props.setValue(e.value, index);
+    }
+
+    if(props.disabled === "false"){
+        return(
+            <div className="optionInputItem">
+                <Select
+                    options={props.options}
+                    onChange={(e) => { changeValue(props.index, e) }}
+                    placeholder={props.placeholder}
+                />
+            </div>
+        )
+    }
+    else{
+        return(
+            <div className="optionInputItem">
+                <Select
+                    placeholder={props.placeholder}
+                />
+            </div>
+        )
+    }
+
 }
+
 export default SelectList
