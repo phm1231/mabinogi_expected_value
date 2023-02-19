@@ -20,14 +20,14 @@ nav, section, aside {
     float: left;
     height: 120vh;
 }
-nav {
-    width: 24vw;
+nav{
+    width: 12vw;
 }
 section {
-    width: 52vw; 
+    width: 76vw; 
 }
 aside {
-    width: 24vw; 
+    width: 12vw;
 }
 footer {
     height: 9vh;

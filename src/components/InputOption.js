@@ -4,6 +4,9 @@ import SelectOptions from "./SelectOptions";
 import "./component.css";
 import makeOption from "../module/makeOption";
 import table from "../data/table.json";
+import ShowResult from "./showResult";
+import subBtnImg from "../img/sub.png"
+import addBtnImg from "../img/add.png"
 
 function InputOption(props){
     const [itemType, setItemType] = useState("itemType");
@@ -11,8 +14,8 @@ function InputOption(props){
     const [rank, setRank] = useState(0);
     const [visible, setVisible] = useState(false);
 
-    const [optionArr, setOptionArr] = useState(["", "", ""]);
-    const [levelArr, setLevelArr] = useState([0, 0, 0]);
+    const [optionArr, setOptionArr] = useState([]);
+    const [levelArr, setLevelArr] = useState([]);
     const [countList, setCountList] = useState([0]);
 
     const toolNames = Object.keys(table);
@@ -23,6 +26,8 @@ function InputOption(props){
     const rankOptions = makeOption(ranks);
     const itemOptions = makeOption(itemTypes);
     const raceOptions = makeOption(races);
+
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(()=>{
         if(
@@ -37,6 +42,13 @@ function InputOption(props){
         }
 
     }, [rank, itemType, race])
+
+    const initOptions = () =>{
+        setCountList([0]);
+        setOptionArr([]);
+        setLevelArr([]);
+        setVisible(false);
+    }
 
     const onChangeOption = (value, index) =>{
         let newOptionArr = [...optionArr];
@@ -64,70 +76,90 @@ function InputOption(props){
             let countArr = [...countList];
             countArr.pop();
             setCountList(countArr);
+
+            let newOptionArr = [];
+            let newLevelArr = [];
+            for(let i=0; i<countArr.length; i++){
+                newOptionArr[i] = optionArr[i];
+                newLevelArr[i] = levelArr[i];
+            }
+            setOptionArr(newOptionArr);
+            setLevelArr(newLevelArr);
         }
     }
 
     const onChangeItemType = (value) =>{
+        initOptions();        
         setItemType(value);
-        setCountList([0]);
-        setOptionArr(["", "", ""]);
-        setLevelArr([0, 0, 0]);
+
     }
 
     const onChangeRace = (value) =>{
+        initOptions();
         setRace(value);
-        setCountList([0]);
-        setOptionArr(["", "", ""]);
-        setLevelArr([0, 0, 0]);
     }
 
     const onChangeRank = (value) =>{
+        initOptions();
         setRank(value);
-        setCountList([0]);
-        setOptionArr(["", "", ""]);
-        setLevelArr([0, 0, 0]);
     }
 
     const onSubmit = () =>{
-        console.log("rank: " + rank);
-        console.log("item: " + itemType);
-        console.log("race: " + race);
-        for(let i=0; i<countList.length; i++){
-            console.log("optionArr[" + i + "]: " + optionArr[i]);
-            console.log("levelArr[" + i + "]: " + levelArr[i]);
-        }
-        // 오류처리 부분 추가하기.
+        
+        onOpenModal();
+    }
+
+    const onOpenModal = () =>{
+        setIsOpen(true);
+    }
+    
+    const onCloseModal = () =>{
+        setIsOpen(false);
     }
 
     return (
         // props.name 으로 수정
         <div>
-            <h3>옵션 설정</h3>
-            <div className="optionInputBox">
-                <SelectList disabled="false" placeholder="랭크" setValue={onChangeRank} options={rankOptions}></SelectList>
-                <SelectList disabled="false" placeholder="아이템 타입" setValue={onChangeItemType} options={itemOptions}></SelectList>
-                <SelectList disabled="false" placeholder="종족" setValue={onChangeRace} options={raceOptions}></SelectList>
+            <ShowResult isOpen={isOpen} onClose={onCloseModal} 
+                Info={{"rank": rank, "item": itemType, "race": race, "options": optionArr, "levels": levelArr}}>
+            </ShowResult>
+            <div>
+                <h3>옵션 설정</h3>
+                <div className="Box">
+                    <div className="optionSettingBox">
+                        <SelectList content="rank" placeholder="랭크" setValue={onChangeRank} options={rankOptions}></SelectList>
+                        <SelectList content="type" placeholder="아이템 타입" setValue={onChangeItemType} options={itemOptions}></SelectList>
+                        <SelectList content="race" placeholder="종족" setValue={onChangeRace} options={raceOptions}></SelectList>
+                    </div>
+                </div>
             </div>
             {
                 visible &&
-                <div>
+                <div className="Box">
                     <h3>옵션 선택</h3>
-                    <div className="optionInputBox">
+                    <div className="optionSelectBox">
                         {countList && countList.map((item, i) => (
-                            <SelectOptions
-                                index={i}
-                                itemType={itemType} race={race} rank={rank}
-                                onChangeOption={onChangeOption} onChangeLevel={onChangeLevel}
-                                selectedOption={optionArr[i]}
-                                addCount={addCount} subCount={subCount}
-                            />
+                            <div key={i} className="optionSelectItem">
+                                <SelectOptions
+                                    index={i}
+                                    itemType={itemType} race={race} rank={rank}
+                                    onChangeOption={onChangeOption} onChangeLevel={onChangeLevel}
+                                    selectedOption={optionArr[i]}
+                                />
+                            </div>
                         ))}
+                        <div className="buttonContainer">
+                            <button className="iconBtn" onClick={addCount}><img className="btnImg" src={addBtnImg}/></button>
+                            <button className="iconBtn" onClick={subCount}><img className="btnImg" src={subBtnImg}/></button>
+                        </div>
                     </div>
-                    <button className="submitBtn" onClick={onSubmit}>Submit</button>
+                    <div className="wrapperBtn">
+                        <button className="w-btn w-btn-indigo" type="button" onClick={onSubmit}>계산하기</button>
+                    </div>
                 </div>
             }
         </div>
     )
 }
 
-export default InputOption;
+export default InputOption; 

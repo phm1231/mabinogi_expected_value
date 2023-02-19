@@ -1,10 +1,43 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+.Box{
+
+}
+
+.optionSettingBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,.1);
+    margin: 100px;
+    margin-top: 10px;
+    padding: 30px;
+    border: 3px solid rgb(12, 10, 10);
+}
+
+.optionInputItem{
+    max-width: 100%;
+    margin-left: 5px;
+    padding: 5px;
+}
+
 .optionSelectBox{
     display: flex;
     position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,.1);
+    margin: 100px;
+    margin-top: 10px;
+    padding: 30px;
+    border: 3px solid rgb(12, 10, 10);
 }
 
 .optionSelectItem{
-    vertical-align: middle;
+    margin: 5px;
+    margin-bottom: 0px;
 }
 
 .priceInputBox{
@@ -17,34 +50,44 @@
     padding-bottom: 30px;
 }
 
+input[type=text]{
+    width: 100%;  /* 원하는 너비 설정 */ 
+    height: inherit;  /* 높이값 초기화 */
+    line-height : normal;  /* line-height 초기화 */
+    padding-left: .3em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */
+    font-family: inherit;  /* 폰트 상속 */
+    font-size: inherit;
+    border: 0;
+    border-radius: 0;  /* iSO 둥근모서리 제거 */
+    outline-style: none;  /* 포커스시 발생하는 효과 제거를 원한다면 */
+    -webkit-appearance: none;  /* 브라우저별 기본 스타일링 제거 */
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .priceInputItem{
-    margin: 20px;
+    display: inline-block;
 }
 
-.optionInputBox{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: white;
-    box-shadow: 0 3px 6px rgba(0,0,0,.1);
-    margin: 100px;
-    margin-top: 10px;
-    padding: 30px;
-
-    border: 3px solid red;
-
+.inlineSelect{
+    display: inline-block;
+    width: fit-content;
+    max-width: 70%;
 }
 
-.optionInputItem{
-    padding: 5px;
+.buttonContainer{
+    display:flex;
+    justify-content: flex-end;
 }
+
 
 .iconBtn{
-    display: flex;
-    width: 40px;
-    height: 30px;
-    background-color: white;
     border: none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0;
+    background-color: white;
     float: right;
 }
 
@@ -56,8 +99,8 @@
 
 .toolImg{
     vertical-align:middle;
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 50px;
+    max-height: 50px;
     object-fit: cover;
 }
 
@@ -68,4 +111,95 @@
     object-fit: cover;
     background-color: white;
     padding-top: 10px;
+}
+
+.Modal{
+    position: relative;
+    z-index: 1000;
+    margin: auto;
+    width: 64vw; 
+    height: 96vh;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,.1);
+}
+
+.blackBackground{
+    z-index:90;
+    background-color: rgba(0, 0, 0, .5);
+    height: 3500px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: all .2 ease-in-out;
+    width: 100%;
+}
+
+.resultTitle{
+    display: flex;
+    flex-direction: column;
+    
+    position: relative;
+    margin: auto;
+    width: inherit;
+    height: 16%;
+    border: 3px solid blue;
+    text-align: center;
+}
+
+.resultTitleContent{
+    position: relative;
+    margin: auto;
+}
+
+.resultTable{
+    margin: auto;
+    border: 3px solid red;
+    width: inherit;
+    height: 84%;
+    text-align: left;
+    display: table;
+}
+
+.resultTableRow{
+    display: table-row;
+}
+
+.resultTableCell{
+    display: table-cell;
+    border: solid;
+    border-width: thin;
+    margin: auto;
+    padding-left: 20px;
+    height: 28%;
+    overflow: hidden;
+}
+
+.wrapperBtn{
+    margin: 10px;
+    text-align: center;
+}
+
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.w-btn-indigo {
+    background-color: white;
+    color: brown
+}
+
+.w-btn:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
 }

@@ -4,6 +4,7 @@ import Footer from './components/layout/footer';
 import Section from './components/layout/section';
 import Aside from './components/layout/aside';
 import Nav from './components/layout/nav';
+import './components/layout/layout.css';
 
 function App(){
   return (

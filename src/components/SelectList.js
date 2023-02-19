@@ -10,24 +10,53 @@ function SelectList(props) {
         props.setValue(e.value, index);
     }
 
-    if(props.disabled === "false"){
+    if(props.content === "rank" || props.content === "type" || props.content === "race"){
         return(
-            <div className="optionInputItem">
                 <Select
                     options={props.options}
                     onChange={(e) => { changeValue(props.index, e) }}
                     placeholder={props.placeholder}
                 />
-            </div>
         )
+    }
+    
+    else if(props.content === "option"){
+        if(props.value === null || props.value === undefined){
+            return(
+                    <Select
+                        className="inlineSelect optionSelectItem"
+                        placeholder={props.placeholder}
+                        options={props.options}
+                        onChange={(e) => { changeValue(props.index, e) }}
+                    />
+            )     
+        }
+        else{
+            return(
+                <Select
+                    className="inlineSelect optionSelectItem"
+                    value={{value: props.value, label: props.value}}
+                    options={props.options}
+                    onChange={(e) => { changeValue(props.index, e) }}
+                />
+            )  
+        }   
+    }
+    else if(props.content === "level"){
+        return(
+            <Select
+                className="inlineSelect optionSelectItem"
+                options={props.options}
+                onChange={(e) => { changeValue(props.index, e) }}
+                placeholder={props.placeholder}
+            />
+        )        
     }
     else{
         return(
-            <div className="optionInputItem">
                 <Select
                     placeholder={props.placeholder}
                 />
-            </div>
         )
     }
 
