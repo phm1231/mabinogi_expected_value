@@ -4,6 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+/*
+const consoleLog = console.log;
+console.log = function() {
+  if (process.env.NODE_ENV !== 'development') {
+    consoleLog.apply(console, arguments);
+  }
+};
+*/
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

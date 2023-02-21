@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from 'axios';
 import InputPrice from "./InputPrice";
 import ELABORATE_IMG from "../img/ELABORATE.png"; // 정교한
 import BRILLIANT_IMG from "../img/BRILLIANT.png"; // 영롱한
@@ -50,12 +51,28 @@ function ResultContent(props){
     const count = props.count;
     const srcImg = getToolImg(props.name);
     const [price, setPrice] = useState(getPrice(props.name));
+    const [testData, setTestData] = useState("");
 
     const onChangePrice = (value)=>{
         setPrice(value);
     }
 
+    async function testFunc(){
+        let sendData = {name: props.name};
+        const res = await axios.post('http://localhost:3001/text', sendData);
+        console.log(res);
+        setTestData(res.data.data);
+    }
+
+    async function routerTest(){
+        let sendData = {name: props.name};
+        const res = await axios.post('http://localhost:3001/api', sendData);
+        console.log("Call TestFunc");
+    }
+
     if(prob !== false){
+//        testFunc();
+        routerTest();
         return(
             <div className="resultTableCell">
                     <p>

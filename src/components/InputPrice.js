@@ -14,7 +14,7 @@ function InputPrice(props){
         maxLength='8'
         placeholder={props.placeholder}
         onChange={(e) =>
-        handleChange(e)
+          handleChange(e)
       }/>
     </div>
   )
