@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import SelectList from "./SelectList";
 import table from "../data/table.json";
 import makeOption from "../module/makeOption";
@@ -6,6 +6,7 @@ import "./component.css"
  
 function SelectOption(props){
 
+    // Table을 새로 api 만들어서 변경.
     const smallTable = table['정교한 세공 도구'.normalize("NFD")][props.rank][props.itemType][props.race];
     const tableOptions = Object.keys(smallTable); 
     const itemOptions = makeOption(tableOptions);

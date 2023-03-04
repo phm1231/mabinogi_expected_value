@@ -60,11 +60,6 @@ router.get("/:toolname", (req, res)=>{
             }
 
         }
-        // 교역 세공 도구
-        else if(toolname === "commerce"){
-            if(item === normalization("천옷")) item = normalization("교역 강화 의상이 아닌 옷");
-            else if(item === normalization("천옷(교역 강화 의상)")) item = normalization("교역 강화 의상");
-        }
 
         // 구 세공 테이블에 존재하지 않는 아이템 타입은 어떻게 처리해주어야 할까에 대해 고민 필요.
         else if(toolname === "advanced"){

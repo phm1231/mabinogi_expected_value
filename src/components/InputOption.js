@@ -3,7 +3,6 @@ import SelectList from "./SelectList";
 import SelectOptions from "./SelectOptions";
 import "./component.css";
 import makeOption from "../module/makeOption";
-import table from "../data/table.json";
 import ShowResult from "./showResult";
 import subBtnImg from "../img/sub.png"
 import addBtnImg from "../img/add.png"
@@ -21,7 +20,6 @@ function InputOption(props){
     const [levelArr, setLevelArr] = useState([]);
     const [countList, setCountList] = useState([0]);
 
-    const toolNames = Object.keys(table); // 고세공이나 정세공에서만 확인한다.
     const [isOpen, setIsOpen] = useState(false);
 
     const [oldTable, setOldTable] = useState({});
