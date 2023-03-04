@@ -8,6 +8,9 @@ import ShowResult from "./showResult";
 import subBtnImg from "../img/sub.png"
 import addBtnImg from "../img/add.png"
 
+import getTable from "../module/callAPI";
+import checkTable from "../module/checkTable";
+
 function InputOption(props){
     const [itemType, setItemType] = useState("itemType");
     const [race, setRace] = useState("race");
@@ -25,14 +28,21 @@ function InputOption(props){
     const [newTable, setNewTable] = useState({});
 
     useEffect(()=>{
-        
+        async function fetchTable() {
+            const oldTableData = await getTable("advanced");
+            const newTableData = await getTable("elaborate");
+            setOldTable(oldTableData);
+            setNewTable(newTableData);
+          }
+          fetchTable();
     }, [])
 
     useEffect(()=>{
         if(
             itemType !== "itemType" && race !== "race" && rank !== "rank" &&
-            table[toolNames[0]][rank][itemType][race] !== undefined &&
-            Object.keys(table[toolNames[0]][rank][itemType][race]).length > 1)
+            ( checkTable(oldTable, rank, itemType, race) || checkTable(newTable, rank, itemType, race) ))
+//            (oldTable[rank][itemType][race] !== undefined || newTable[rank][itemType][race] !== undefined ))
+//            Object.keys(table[toolNames[0]][rank][itemType][race]).length > 1)
             {
                 setVisible(true);
             }

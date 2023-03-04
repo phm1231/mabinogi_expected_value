@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import axios from 'axios';
 import InputPrice from "./InputPrice";
 import ELABORATE_IMG from "../img/ELABORATE.png"; // 정교한
 import BRILLIANT_IMG from "../img/BRILLIANT.png"; // 영롱한
@@ -7,6 +6,7 @@ import ADVANCED_IMG from "../img/ADVANCED.png"; // 고급
 import CREDNE_IMG from "../img/CREDNE.png"; // 크레드네
 import KINDPLUS_IMG from "../img/KINDPLUS.png"; // 착세플
 import MEMORIZE_IMG from "../img/MEMORIZE.png"; // 기억
+import getTable from "../module/callAPI";
 
 function getToolImg(name){
     switch(name){
@@ -58,21 +58,8 @@ function ResultContent(props){
         setPrice(value);
     }
 
-    async function getTest(){
-        const res = await axios.get(`http://localhost:3001/probs/${props.name}`,{
-            params:{
-                rank: "1랭크",
-                item: "너클",
-                race: "공용"
-            }
-        });
-        console.log("Call getTest");
-        console.log(res.data);
-        return res.data;
-    }
-
     if(prob !== false){
-        getTest();
+        getTable();
         return(
             <div className="resultTableCell">
                     <p>

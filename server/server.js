@@ -7,6 +7,9 @@ const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ type: 'application/json;charset=UTF-8' }));
+
 app.use('/probs', router);
 
 

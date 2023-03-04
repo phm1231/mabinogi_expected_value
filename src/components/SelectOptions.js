@@ -3,12 +3,6 @@ import SelectList from "./SelectList";
 import table from "../data/table.json";
 import makeOption from "../module/makeOption";
 import "./component.css"
-
-/*
-async function getTable(toolname, rank, itemtype, race){
-    await axios.get
-}
-*/
  
 function SelectOption(props){
 
@@ -32,11 +26,12 @@ function SelectOption(props){
                 options={itemOptions}>    
             </SelectList>
             {
-                smallTable[props.selectedOption] !== undefined &&
+                props.selectedOption !== undefined &&
+                smallTable[props.selectedOption.normalize("NFC")] !== undefined &&
                 <SelectList content="level" placeholder="레벨" 
                     index={props.index}
                     setValue={onChangeLevel}
-                    options={makeOption(Object.keys(smallTable[props.selectedOption]))}>
+                    options={makeOption(Object.keys(smallTable[props.selectedOption.normalize("NFC")]))}>
                 </SelectList>
             }
         </div>

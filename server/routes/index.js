@@ -3,6 +3,10 @@ const router = express.Router();
 const {toolnames} = require('../data/table/toolnames.js');
 const tables = require('../data/table/table.js');
 
+function normalization(str){
+    return str.normalize("NFC");
+}
+
 router.get("/", (req, res)=>{
     const keys = Object.keys(tables);
     keys.forEach((value, index, array)=>{
@@ -12,7 +16,9 @@ router.get("/", (req, res)=>{
 })
 
 router.get("/:toolname", (req, res)=>{
-    let toolname = req.params.toolname.toLowerCase() || 0;
+
+    let toolname = normalization(req.params.toolname.toLowerCase()) || 0;
+    console.log(toolname + " Start");
 
     if(!Object.keys(toolnames).includes(toolname.toUpperCase())){
         res.status(404).send("Not toolname");
@@ -20,26 +26,30 @@ router.get("/:toolname", (req, res)=>{
     }
 
     if(req.query.rank === undefined && req.query.item === undefined && req.query.race === undefined){
-        res.send(tables[toolname]);
+        res.status(200).send(tables[toolname]);
         return;
     }
 
     try{
-        const rank = req.query.rank.normalize("NFD") || 0;
-        let item = req.query.item.normalize("NFD") || 0;
-        const race = req.query.race.normalize("NFD") || 0;
+        const rank = normalization(req.query.rank) || 0;
+        let item = normalization(req.query.item) || 0;
+        const race = normalization(req.query.race) || 0;
 
         if(rank === 0 || item === 0 || race === 0){
             res.send("No param");
             return;
         }
 
-        // ½Å ¼¼°ø Å×ÀÌºí¿¡ Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌÅÛ Å¸ÀÔ º¯È¯
-        if(toolname === "elaborate" || toolname === "brilliant"){
-            const classic_str = 'Å¬·¡½Ä Á¤·É '.normalize("NFD");
-            const fullswing_str = 'ÀÚÀÌ¾ğÆ® Ç® ½ºÀ® '.normalize("NFD");
-            const axe_str = '¾ç¼Õ µµ³¢'.normalize("NFD");
-            const blunt_str = '¾ç¼Õ µĞ±â'.normalize("NFD");
+        // ì‹  ì„¸ê³µ í…Œì´ë¸”ì— ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´í…œ íƒ€ì… ë³€í™˜
+        if(toolname === normalization("elaborate") || toolname === normalization("brilliant")){
+
+            const classic_str = normalization('í´ë˜ì‹ ì •ë ¹ ');
+            const fullswing_str = normalization('ìì´ì–¸íŠ¸ í’€ ìŠ¤ìœ™ ');
+            const axe_str = normalization('ì–‘ì† ë„ë¼');
+            const blunt_str = normalization('ì–‘ì† ë‘”ê¸°');
+
+            console.log(item);
+            console.log(classic_str);
 
             if(item.includes(classic_str)){
                 item = item.replace(classic_str, '');
@@ -48,29 +58,39 @@ router.get("/:toolname", (req, res)=>{
                 if(item.includes(axe_str)) item = axe_str;
                 else if(item.includes(blunt_str)) item = blunt_str;
             }
+
         }
-        // ±³¿ª ¼¼°ø µµ±¸
+        // êµì—­ ì„¸ê³µ ë„êµ¬
         else if(toolname === "commerce"){
-            if(item === "Ãµ¿Ê") item = "±³¿ª °­È­ ÀÇ»óÀÌ ¾Æ´Ñ ¿Ê".normalize("NFD");
-            else if(item === "Ãµ¿Ê(±³¿ª °­È­ ÀÇ»ó)") item = "±³¿ª °­È­ ÀÇ»ó".normalize("NFD");
+            if(item === normalization("ì²œì˜·")) item = normalization("êµì—­ ê°•í™” ì˜ìƒì´ ì•„ë‹Œ ì˜·");
+            else if(item === normalization("ì²œì˜·(êµì—­ ê°•í™” ì˜ìƒ)")) item = normalization("êµì—­ ê°•í™” ì˜ìƒ");
         }
 
-        // ±¸ ¼¼°ø Å×ÀÌºí¿¡ Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌÅÛ Å¸ÀÔÀº ¾î¶»°Ô Ã³¸®ÇØÁÖ¾î¾ß ÇÒ±î¿¡ ´ëÇØ °í¹Î ÇÊ¿ä.
+        // êµ¬ ì„¸ê³µ í…Œì´ë¸”ì— ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´í…œ íƒ€ì…ì€ ì–´ë–»ê²Œ ì²˜ë¦¬í•´ì£¼ì–´ì•¼ í• ê¹Œì— ëŒ€í•´ ê³ ë¯¼ í•„ìš”.
         else if(toolname === "advanced"){
-            let special_weapons = ["·¹ÀÌÇÇ¾î", "¼ÎÇÁÀÇ °ÅÄ£ ¼Õ±æ", "¸¶·Â ³ÊÅ¬", "´ëÇü ³´", "½ã·Îµå ÄİÆ®"];
-            for(let i=0; i<special_weapons.length; i++) special_weapons[i] = special_weapons[i].normalize("NFD");
+            let special_weapons = [normalization("ë ˆì´í”¼ì–´"), normalization("ì…°í”„ì˜ ê±°ì¹œ ì†ê¸¸"),
+                normalization("ë§ˆë ¥ ë„ˆí´"), normalization("ëŒ€í˜• ë‚«"), normalization("ì¬ë¡œë“œ ì½œíŠ¸")];
+            for(let i=0; i<special_weapons.length; i++) special_weapons[i] = normalization(special_weapons[i]);
             if(special_weapons.includes(item)){
-                res.status(200).send(false);
+                res.status(200).send("No Special Weapon");
                 return;
             }
         }
-        res.status(200).send(tables[toolname][rank.normalize("NFC")][item.normalize("NFC")][race.normalize("NFC")]); // [item][race]); // [item][race]);
+
+        if( tables[toolname].hasOwnProperty(rank) &&
+            tables[toolname][rank].hasOwnProperty(item) &&
+            tables[toolname][rank][item].hasOwnProperty(race))
+            {
+                console.log(tables[toolname][rank][item][race]);
+                res.status(200).send(tables[toolname][rank][item][race]);
+                return;
+            }
 
     }catch(e){
         console.log(e);
         res.status(404).send("Bad Request...");
     }
-
+    console.log(toolname + " END");
 })
 
 
