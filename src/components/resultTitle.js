@@ -8,7 +8,7 @@ function resultTitle(props){
         <div className="resultTitle">
             {
                 options.map((item, i)=>(
-                    <p className="resultTitleContent">{options[i]} {levels[i]} 레벨 이상</p>
+                    <p key={i} className="resultTitleContent">{options[i]} {levels[i]} 레벨 이상</p>
                 ))
             }
         </div>

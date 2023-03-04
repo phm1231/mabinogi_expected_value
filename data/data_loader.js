@@ -1,3 +1,5 @@
+// 크롤링한 파일을 읽어 json 파일로 만들어줌
+
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
@@ -28,6 +30,7 @@ function readAllDataFile(){
     let table = {};
 
     fs.readdirSync(prob_dir, {withFileTypes: true}).forEach(tool => {
+
         if(tool.isDirectory()){
             const tool_dir = path.join(prob_dir, tool.name);
             if(table[tool.name] === undefined) table[tool.name] = {};
@@ -51,6 +54,10 @@ function readAllDataFile(){
                 }
             })
         }
+
+        const jsonData = JSON.stringify(table);
+        fs.writeFileSync(`${tool.name}.json`, jsonData);
+        table = {};
     });
 
     return table;
@@ -70,15 +77,6 @@ function readTest(){
     }
 }
 
-function printProb(prob){
-
-    for( option in prob){
-        for (level in prob[option]){
-            // console.log(option + ": " + level + " - " + prob[option][level]);
-        }
-    }
-
-}
 
 const table = readAllDataFile();
 

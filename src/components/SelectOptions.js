@@ -3,6 +3,12 @@ import SelectList from "./SelectList";
 import table from "../data/table.json";
 import makeOption from "../module/makeOption";
 import "./component.css"
+
+/*
+async function getTable(toolname, rank, itemtype, race){
+    await axios.get
+}
+*/
  
 function SelectOption(props){
 

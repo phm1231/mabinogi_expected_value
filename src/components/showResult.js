@@ -64,7 +64,6 @@ function ExampleModal(props){
       }
 
       catch(error){
-        console.log(error);
         isSuccess[toolName] = false;
         finalProb[toolName] = false;
         expectedCount[toolName] = false;

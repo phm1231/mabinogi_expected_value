@@ -48,41 +48,41 @@ function getPrice(name){
 
 function ResultContent(props){
     const prob = props.prob;
+    const name = props.name;
     const count = props.count;
     const srcImg = getToolImg(props.name);
-    const [price, setPrice] = useState(getPrice(props.name));
+    const [price, setPrice] = useState(getPrice(name));
     const [testData, setTestData] = useState("");
 
     const onChangePrice = (value)=>{
         setPrice(value);
     }
 
-    async function testFunc(){
-        let sendData = {name: props.name};
-        const res = await axios.post('http://localhost:3001/text', sendData);
-        console.log(res);
-        setTestData(res.data.data);
-    }
-
-    async function routerTest(){
-        let sendData = {name: props.name};
-        const res = await axios.post('http://localhost:3001/api', sendData);
-        console.log("Call TestFunc");
+    async function getTest(){
+        const res = await axios.get(`http://localhost:3001/probs/${props.name}`,{
+            params:{
+                rank: "1랭크",
+                item: "너클",
+                race: "공용"
+            }
+        });
+        console.log("Call getTest");
+        console.log(res.data);
+        return res.data;
     }
 
     if(prob !== false){
-//        testFunc();
-        routerTest();
+        getTest();
         return(
             <div className="resultTableCell">
                     <p>
                         <img className="toolImg" src={srcImg} alt="toolImg"></img>
-                        {props.name}
+                        {name}
                     </p>
-                    <p>
+                    <div>
                         개당 가격: 
                         <InputPrice placeholder={price} onChange={onChangePrice}></InputPrice>
-                    </p>
+                    </div>
                     <p>1회 당 등장 확률: {prob.toFixed(20)}%</p>
                     <p>예상 소모 개수: {count}개</p>
                     <p>기대 Gold: {(count * price).toLocaleString()}</p>

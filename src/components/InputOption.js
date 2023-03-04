@@ -11,27 +11,26 @@ import addBtnImg from "../img/add.png"
 function InputOption(props){
     const [itemType, setItemType] = useState("itemType");
     const [race, setRace] = useState("race");
-    const [rank, setRank] = useState(0);
+    const [rank, setRank] = useState("rank");
     const [visible, setVisible] = useState(false);
 
     const [optionArr, setOptionArr] = useState([]);
     const [levelArr, setLevelArr] = useState([]);
     const [countList, setCountList] = useState([0]);
 
-    const toolNames = Object.keys(table);
-    const ranks = Object.keys(table[toolNames[0]]);
-    const itemTypes = Object.keys(table[toolNames[0]][ranks[0]]);
-    const races = Object.keys(table[toolNames[0]][ranks[0]][itemTypes[0]]);
-
-    const rankOptions = makeOption(ranks);
-    const itemOptions = makeOption(itemTypes);
-    const raceOptions = makeOption(races);
-
+    const toolNames = Object.keys(table); // 고세공이나 정세공에서만 확인한다.
     const [isOpen, setIsOpen] = useState(false);
+
+    const [oldTable, setOldTable] = useState({});
+    const [newTable, setNewTable] = useState({});
+
+    useEffect(()=>{
+        
+    }, [])
 
     useEffect(()=>{
         if(
-            itemType !== "itemType" && race !== "race" && rank !== 0 &&
+            itemType !== "itemType" && race !== "race" && rank !== "rank" &&
             table[toolNames[0]][rank][itemType][race] !== undefined &&
             Object.keys(table[toolNames[0]][rank][itemType][race]).length > 1)
             {
@@ -91,7 +90,6 @@ function InputOption(props){
     const onChangeItemType = (value) =>{
         initOptions();        
         setItemType(value);
-
     }
 
     const onChangeRace = (value) =>{
@@ -104,8 +102,7 @@ function InputOption(props){
         setRank(value);
     }
 
-    const onSubmit = () =>{
-        
+    const onSubmit = () =>{   
         onOpenModal();
     }
 
@@ -127,9 +124,9 @@ function InputOption(props){
                 <h3>옵션 설정</h3>
                 <div className="Box">
                     <div className="optionSettingBox">
-                        <SelectList content="rank" placeholder="랭크" setValue={onChangeRank} options={rankOptions}></SelectList>
-                        <SelectList content="type" placeholder="아이템 타입" setValue={onChangeItemType} options={itemOptions}></SelectList>
-                        <SelectList content="race" placeholder="종족" setValue={onChangeRace} options={raceOptions}></SelectList>
+                        <SelectList content="rank" placeholder="랭크" setValue={onChangeRank}></SelectList>
+                        <SelectList content="type" placeholder="아이템 타입" setValue={onChangeItemType}></SelectList>
+                        <SelectList content="race" placeholder="종족" setValue={onChangeRace}></SelectList>
                     </div>
                 </div>
             </div>

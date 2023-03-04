@@ -2,24 +2,45 @@ import React from "react";
 import Select, { components } from "react-select";
 import "./component.css"
 
+import makeOption from "../module/makeOption";
+import ranks from "../data/ranks";
+import itemtypes from "../data/itemtypes";
+import races from "../data/races";
 
 // props must have <value, label>
 function SelectList(props) {
 
     const changeValue = (index, e) =>{
-        props.setValue(e.value, index);
+        props.setValue(e.value.normalize("NFD"), index);
     }
 
-    if(props.content === "rank" || props.content === "type" || props.content === "race"){
-        return(
-                <Select
-                    options={props.options}
-                    onChange={(e) => { changeValue(props.index, e) }}
-                    placeholder={props.placeholder}
-                />
+    if(props.content === "rank"){
+        return (
+            <Select
+                options={makeOption(ranks)}
+                onChange={(e) => { changeValue(props.index, e) }}
+                placeholder={props.placeholder}
+            />
         )
     }
-    
+    else if(props.content === "type"){
+        return (
+            <Select
+                options={makeOption(itemtypes)}
+                onChange={(e) => { changeValue(props.index, e) }}
+                placeholder={props.placeholder}
+            />
+        )
+    }
+    else if(props.content === "race"){
+        return (
+            <Select
+                options={makeOption(races)}
+                onChange={(e) => { changeValue(props.index, e) }}
+                placeholder={props.placeholder}
+            />
+        )
+    }
     else if(props.content === "option"){
         if(props.value === null || props.value === undefined){
             return(
