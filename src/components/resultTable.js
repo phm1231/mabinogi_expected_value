@@ -1,24 +1,22 @@
 import React from "react";
 import ResultContent from "./resultContent";
+import {ToolnamesForAPI, Toolnames} from "../data/tools";
 
 function resultTable(props){
-    const probs = props.probs;
-    const counts = props.counts;
-    const keys = Object.keys(probs);
-
+    const Info = props.Info;
     return(
         <div className="resultTable">
             <div className="resultTableRow">
-                <ResultContent name={keys[0]} prob={probs[keys[0]]} count={counts[keys[0]]}></ResultContent>
-                <ResultContent name={keys[1]} prob={probs[keys[1]]} count={counts[keys[1]]}></ResultContent>
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[0]} toolname={Toolnames[0]}></ResultContent>
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[1]} toolname={Toolnames[1]}></ResultContent>
             </div>
             <div className="resultTableRow">
-                <ResultContent name={keys[2]} prob={probs[keys[2]]} count={counts[keys[2]]}></ResultContent>
-                <ResultContent name={keys[3]} prob={probs[keys[3]]} count={counts[keys[3]]}></ResultContent>
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[2]} toolname={Toolnames[2]}></ResultContent>
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[3]} toolname={Toolnames[3]}></ResultContent>
             </div>
             <div className="resultTableRow">
-                <ResultContent name={keys[4]} prob={probs[keys[4]]} count={counts[keys[4]]}></ResultContent>
-                <ResultContent name={keys[5]} prob={probs[keys[5]]} count={counts[keys[5]]}></ResultContent>
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[4]} toolname={Toolnames[4]}></ResultContent>
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[5]} toolname={Toolnames[5]}></ResultContent>
             </div>
         </div>
     )

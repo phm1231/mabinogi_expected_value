@@ -6,7 +6,6 @@ import makeOption from "../module/makeOption";
 import ShowResult from "./showResult";
 import subBtnImg from "../img/sub.png"
 import addBtnImg from "../img/add.png"
-
 import getTable from "../module/callAPI";
 import checkTable from "../module/checkTable";
 

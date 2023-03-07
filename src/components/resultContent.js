@@ -1,86 +1,58 @@
 import React, {useState, useEffect} from "react";
 import InputPrice from "./InputPrice";
-import ELABORATE_IMG from "../img/ELABORATE.png"; // 정교한
-import BRILLIANT_IMG from "../img/BRILLIANT.png"; // 영롱한
-import ADVANCED_IMG from "../img/ADVANCED.png"; // 고급
-import CREDNE_IMG from "../img/CREDNE.png"; // 크레드네
-import KINDPLUS_IMG from "../img/KINDPLUS.png"; // 착세플
-import MEMORIZE_IMG from "../img/MEMORIZE.png"; // 기억
-import getTable from "../module/callAPI";
-
-function getToolImg(name){
-    switch(name){
-        case "정교한 세공 도구".normalize("NFD"):
-            return ELABORATE_IMG;
-        case "영롱한 세공 도구".normalize("NFD"):
-            return BRILLIANT_IMG;
-        case "고급 세공 도구".normalize("NFD"):
-            return ADVANCED_IMG;
-        case "크레드네의 세공 도구".normalize("NFD"):
-            return CREDNE_IMG;
-        case "착한 세공 도구 PLUS".normalize("NFD"):
-            return KINDPLUS_IMG;
-        case "기억의 세공 도구".normalize("NFD"):
-            return MEMORIZE_IMG;
-        default:
-            break;
-    }
-}
-
-function getPrice(name){
-    switch(name){
-        case "정교한 세공 도구".normalize("NFD"):
-            return 1500000;
-        case "영롱한 세공 도구".normalize("NFD"):
-            return 2000000;
-        case "고급 세공 도구".normalize("NFD"):
-            return 1000000;
-        case "크레드네의 세공 도구".normalize("NFD"):
-            return 3000000;
-        case "착한 세공 도구 PLUS".normalize("NFD"):
-            return 2000000;
-        case "기억의 세공 도구".normalize("NFD"):
-            return 1000000;
-        default:
-            break;
-    }
-}
+import {getToolImg, getPrice} from "../data/tools"
+import {getProbability} from "../module/getProbability";
 
 function ResultContent(props){
-    const prob = props.prob;
-    const name = props.name;
-    const count = props.count;
-    const srcImg = getToolImg(props.name);
-    const [price, setPrice] = useState(getPrice(name));
-    const [testData, setTestData] = useState("");
+    const toolname = props.toolname;
+    const toolnameForAPI = props.toolnameForAPI;
+    const Info = props.Info;
+    const ROUND_DIGIT = 20;
+
+    const srcImg = getToolImg(toolname);
+    const [price, setPrice] = useState("");
+    const [prob, setProb] = useState(false);
+
+
+    useEffect(()=>{
+        async function fetchData(){
+            const tmpProb = await getProbability(toolnameForAPI, Info);
+            setProb(tmpProb);
+            setPrice(getPrice(toolname));
+        }
+        fetchData();
+    }, [])
+
 
     const onChangePrice = (value)=>{
         setPrice(value);
     }
 
-    if(prob !== false){
-        getTable();
+    if(prob !== false){ // 확률 구하는데 성공한다면
+        const outputProb = prob * 100;
+        const expectedCount = Math.round(1 / prob);
         return(
             <div className="resultTableCell">
                     <p>
                         <img className="toolImg" src={srcImg} alt="toolImg"></img>
-                        {name}
+                        {toolname}
                     </p>
                     <div>
                         개당 가격: 
                         <InputPrice placeholder={price} onChange={onChangePrice}></InputPrice>
                     </div>
-                    <p>1회 당 등장 확률: {prob.toFixed(20)}%</p>
-                    <p>예상 소모 개수: {count}개</p>
-                    <p>기대 Gold: {(count * price).toLocaleString()}</p>
+                    <p>1회 당 등장 확률: {outputProb.toFixed(ROUND_DIGIT)}%</p>
+                    <p>예상 소모 개수: {expectedCount}개</p>
+                    <p>기대 Gold: {(expectedCount * price).toLocaleString()}</p>
             </div>
         )
     }
     return(
+
         <div className="resultTableCell">
             <p>
                 <img className="toolImg" src={srcImg} alt="toolImg"></img>
-                {props.name}
+                {toolname}
             </p>
             <p>
                 등장할 수 없는 옵션입니다.

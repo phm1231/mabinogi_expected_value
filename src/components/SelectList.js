@@ -1,7 +1,6 @@
 import React from "react";
 import Select, { components } from "react-select";
 import "./component.css"
-
 import makeOption from "../module/makeOption";
 import ranks from "../data/ranks";
 import itemtypes from "../data/itemtypes";
@@ -11,7 +10,7 @@ import races from "../data/races";
 function SelectList(props) {
 
     const changeValue = (index, e) =>{
-        props.setValue(e.value.normalize("NFD"), index);
+        props.setValue(e.value, index);
     }
 
     if(props.content === "rank"){
@@ -42,7 +41,7 @@ function SelectList(props) {
         )
     }
     else if(props.content === "option"){
-        if(props.value === null || props.value === undefined){
+        if(props.value === null || props.value === undefined || props.value === ""){
             return(
                     <Select
                         className="inlineSelect optionSelectItem"

@@ -3,7 +3,7 @@ import React from "react";
 function resultTitle(props){
     const options = props.options;
     const levels = props.levels;
-
+ 
     return(
         <div className="resultTitle">
             {

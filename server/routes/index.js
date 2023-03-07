@@ -18,7 +18,6 @@ router.get("/", (req, res)=>{
 router.get("/:toolname", (req, res)=>{
 
     let toolname = normalization(req.params.toolname.toLowerCase()) || 0;
-    console.log(toolname + " Start");
 
     if(!Object.keys(toolnames).includes(toolname.toUpperCase())){
         res.status(404).send("Not toolname");
@@ -48,9 +47,6 @@ router.get("/:toolname", (req, res)=>{
             const axe_str = normalization('양손 도끼');
             const blunt_str = normalization('양손 둔기');
 
-            console.log(item);
-            console.log(classic_str);
-
             if(item.includes(classic_str)){
                 item = item.replace(classic_str, '');
             }
@@ -76,7 +72,6 @@ router.get("/:toolname", (req, res)=>{
             tables[toolname][rank].hasOwnProperty(item) &&
             tables[toolname][rank][item].hasOwnProperty(race))
             {
-                console.log(tables[toolname][rank][item][race]);
                 res.status(200).send(tables[toolname][rank][item][race]);
                 return;
             }
@@ -85,7 +80,6 @@ router.get("/:toolname", (req, res)=>{
         console.log(e);
         res.status(404).send("Bad Request...");
     }
-    console.log(toolname + " END");
 })
 
 

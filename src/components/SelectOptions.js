@@ -1,20 +1,46 @@
 import React, {useState, useEffect} from "react";
 import SelectList from "./SelectList";
-import table from "../data/table.json";
+import {getOption} from "../module/callAPI.js";
 import makeOption from "../module/makeOption";
 import "./component.css"
  
 function SelectOption(props){
 
-    // Table을 새로 api 만들어서 변경.
-    const smallTable = table['정교한 세공 도구'.normalize("NFD")][props.rank][props.itemType][props.race];
-    const tableOptions = Object.keys(smallTable); 
-    const itemOptions = makeOption(tableOptions);
+    const [optionAndLevel, setOptionAndLevel] = useState({});
+    const [optionlist, setOptionlist] = useState({});
+    const [levellist, setLevellist] = useState({});
+    const [selectedOption, setSelectedOption] = useState("");
+    const [selectedLevel, setSelectedLevel] = useState("");
+
+    useEffect(()=>{
+        async function fetchOptionAndLevel() {
+            const optionAndLevel = await getOption(props.rank, props.itemType, props.race);
+            setOptionAndLevel(optionAndLevel);
+            setOptionlist(makeOption(Object.keys(optionAndLevel)));
+          }
+          fetchOptionAndLevel();
+    }, [])
+
+    useEffect(()=>{
+        if(optionAndLevel !== {} && selectedOption !== ""){
+            const minLevel = Number(optionAndLevel[selectedOption.normalize("NFC")]["0"]);
+            const maxLevel = Number(optionAndLevel[selectedOption.normalize("NFC")]["1"]);
+
+            let levelArr = [];
+            for(let i=minLevel; i<=maxLevel; i++){
+                levelArr.push(i)
+            }
+            setLevellist(makeOption(levelArr));
+        }
+    }, [selectedOption])
 
     const onChangeOption = (option, index) =>{
+        setSelectedOption(option);
         props.onChangeOption(option, index);
     }
+
     const onChangeLevel = (level, index) =>{
+        setSelectedLevel(level);
         props.onChangeLevel(level, index);
     }
 
@@ -22,22 +48,20 @@ function SelectOption(props){
         <div>
             <SelectList content="option" placeholder="아이템 옵션" 
                 index={props.index}
-                value={props.selectedOption}
+                value={selectedOption}
                 setValue={onChangeOption}
-                options={itemOptions}>    
+                options={optionlist}>    
             </SelectList>
             {
-                props.selectedOption !== undefined &&
-                smallTable[props.selectedOption.normalize("NFC")] !== undefined &&
+                levellist.length > 1 &&
                 <SelectList content="level" placeholder="레벨" 
                     index={props.index}
                     setValue={onChangeLevel}
-                    options={makeOption(Object.keys(smallTable[props.selectedOption.normalize("NFC")]))}>
+                    options={levellist}>
                 </SelectList>
             }
         </div>
     )
-
 }
 
 export default SelectOption;

@@ -1,5 +1,4 @@
 function checkTable(table, rank, item, race){
-    console.log(table);
     const RANK = rank.normalize("NFC");
     const ITEM = item.normalize("NFC");
     const RACE = race.normalize("NFC");
