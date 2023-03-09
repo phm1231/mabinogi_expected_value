@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './component.css';
-import ResultTitle from "./resultTitle";
-import ResultTable from "./resultTable";
+import ResultTitle from "./ResultTitle";
+import ResultTable from "./ResultTable";
 
 function ShowResult(props){
 
@@ -15,7 +15,7 @@ function ShowResult(props){
       <div>
         <div className='blackBackground'/>
         <div className="Modal">
-          <ResultTitle options={Info.options} levels={Info.levels}></ResultTitle>
+          <ResultTitle Info={Info}></ResultTitle>
           <ResultTable Info={Info}></ResultTable>
           <div className="wrapperBtn">
             <button className="w-btn w-btn-indigo" type="button" onClick={props.onClose}>Close</button>

@@ -7,14 +7,6 @@ function normalization(str){
     return str.normalize("NFC");
 }
 
-router.get("/", (req, res)=>{
-    const keys = Object.keys(tables);
-    keys.forEach((value, index, array)=>{
-        console.log(tables[value]);
-    })
-    res.send("Hello");
-})
-
 router.get("/:toolname", (req, res)=>{
 
     let toolname = normalization(req.params.toolname.toLowerCase()) || 0;
@@ -41,7 +33,6 @@ router.get("/:toolname", (req, res)=>{
 
         // 신 세공 테이블에 존재하지 않는 아이템 타입 변환
         if(toolname === normalization("elaborate") || toolname === normalization("brilliant")){
-
             const classic_str = normalization('클래식 정령 ');
             const fullswing_str = normalization('자이언트 풀 스윙 ');
             const axe_str = normalization('양손 도끼');
@@ -54,10 +45,8 @@ router.get("/:toolname", (req, res)=>{
                 if(item.includes(axe_str)) item = axe_str;
                 else if(item.includes(blunt_str)) item = blunt_str;
             }
-
         }
 
-        // 구 세공 테이블에 존재하지 않는 아이템 타입은 어떻게 처리해주어야 할까에 대해 고민 필요.
         else if(toolname === "advanced"){
             let special_weapons = [normalization("레이피어"), normalization("셰프의 거친 손길"),
                 normalization("마력 너클"), normalization("대형 낫"), normalization("썬로드 콜트")];
@@ -80,13 +69,6 @@ router.get("/:toolname", (req, res)=>{
         console.log(e);
         res.status(404).send("Bad Request...");
     }
-})
-
-
-
-router.post("/", (req, res)=>{
-    console.log("Here is Index Post");
-    return "Post";
 })
 
 module.exports = router;

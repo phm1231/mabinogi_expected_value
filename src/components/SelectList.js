@@ -1,11 +1,30 @@
 import React from "react";
-import Select, { components } from "react-select";
+import Select from "react-select";
 import "./component.css"
 import makeOption from "../module/makeOption";
 import ranks from "../data/ranks";
 import itemtypes from "../data/itemtypes";
 import races from "../data/races";
 
+const selectStyles = {
+    control: (base, state) => ({
+      ...base,
+      width: "20vw",
+    }),
+  };
+
+function getOption(content){
+    switch(content){
+        case "rank":
+            return makeOption(ranks);
+        case "type":
+            return makeOption(itemtypes);
+        case "race":
+            return makeOption(races);
+        default:
+            return false;
+    }
+}
 // props must have <value, label>
 function SelectList(props) {
 
@@ -13,28 +32,10 @@ function SelectList(props) {
         props.setValue(e.value, index);
     }
 
-    if(props.content === "rank"){
+    if(props.content === "rank" || props.content === "type" || props.content === "race"){
         return (
             <Select
-                options={makeOption(ranks)}
-                onChange={(e) => { changeValue(props.index, e) }}
-                placeholder={props.placeholder}
-            />
-        )
-    }
-    else if(props.content === "type"){
-        return (
-            <Select
-                options={makeOption(itemtypes)}
-                onChange={(e) => { changeValue(props.index, e) }}
-                placeholder={props.placeholder}
-            />
-        )
-    }
-    else if(props.content === "race"){
-        return (
-            <Select
-                options={makeOption(races)}
+                options={getOption(props.content)}
                 onChange={(e) => { changeValue(props.index, e) }}
                 placeholder={props.placeholder}
             />
@@ -44,6 +45,7 @@ function SelectList(props) {
         if(props.value === null || props.value === undefined || props.value === ""){
             return(
                     <Select
+                        styles={selectStyles}
                         className="inlineSelect optionSelectItem"
                         placeholder={props.placeholder}
                         options={props.options}
@@ -54,6 +56,7 @@ function SelectList(props) {
         else{
             return(
                 <Select
+                    styles={selectStyles}
                     className="inlineSelect optionSelectItem"
                     value={{value: props.value, label: props.value}}
                     options={props.options}
@@ -66,6 +69,10 @@ function SelectList(props) {
         return(
             <Select
                 className="inlineSelect optionSelectItem"
+                value={
+                    (props.value === null || props.value === undefined || props.value === "") ? 
+                    null :
+                    {value: props.value, label: props.value}}
                 options={props.options}
                 onChange={(e) => { changeValue(props.index, e) }}
                 placeholder={props.placeholder}
@@ -76,6 +83,7 @@ function SelectList(props) {
         return(
                 <Select
                     placeholder={props.placeholder}
+
                 />
         )
     }

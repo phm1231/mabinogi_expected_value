@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
 
 .Box{
-
+    width: 46vw; 
+    margin: auto;
 }
 
 .optionSettingBox{
@@ -114,10 +115,10 @@ input[type=text]{
 }
 
 .Modal{
+    z-index: 100;
     position: relative;
-    z-index: 1000;
     margin: auto;
-    width: 64vw; 
+    width: 46vw; 
     height: 96vh;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0,0,0,.1);
@@ -126,7 +127,7 @@ input[type=text]{
 .blackBackground{
     z-index:90;
     background-color: rgba(0, 0, 0, .5);
-    height: 3500px;
+    height: 3600px;
     left: 0;
     position: fixed;
     top: 0;
@@ -154,6 +155,7 @@ input[type=text]{
 .resultTable{
     margin: auto;
     border: 3px solid red;
+    background-color: white;
     width: inherit;
     height: 84%;
     text-align: left;
@@ -170,7 +172,8 @@ input[type=text]{
     border-width: thin;
     margin: auto;
     padding-left: 20px;
-    height: 28%;
+    height: 32%;
+    width: 50%;
     overflow: hidden;
 }
 

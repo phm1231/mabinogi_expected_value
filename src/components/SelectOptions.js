@@ -32,6 +32,8 @@ function SelectOption(props){
             }
             setLevellist(makeOption(levelArr));
         }
+        onChangeLevel("", props.index);
+
     }, [selectedOption])
 
     const onChangeOption = (option, index) =>{
@@ -53,9 +55,10 @@ function SelectOption(props){
                 options={optionlist}>    
             </SelectList>
             {
-                levellist.length > 1 &&
+                levellist.length !== undefined &&
                 <SelectList content="level" placeholder="레벨" 
                     index={props.index}
+                    value={selectedLevel}
                     setValue={onChangeLevel}
                     options={levellist}>
                 </SelectList>

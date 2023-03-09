@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from "react";
 import InputPrice from "./InputPrice";
 import {getToolImg, getPrice} from "../data/tools"
-import {getProbability} from "../module/getProbability";
+import {getProbability, getMaximumExpectedCount, getAverageExpectedCount} from "../module/getProbability";
+import moneyToString from "../module/moneyToString";
+import getRoundDigit from "../module/getRoundDigit";
 
 function ResultContent(props){
     const toolname = props.toolname;
     const toolnameForAPI = props.toolnameForAPI;
     const Info = props.Info;
-    const ROUND_DIGIT = 20;
 
     const srcImg = getToolImg(toolname);
     const [price, setPrice] = useState("");
@@ -16,7 +17,7 @@ function ResultContent(props){
 
     useEffect(()=>{
         async function fetchData(){
-            const tmpProb = await getProbability(toolnameForAPI, Info);
+            const tmpProb = await getProbability(toolnameForAPI, Info); // 1회 등장 확률
             setProb(tmpProb);
             setPrice(getPrice(toolname));
         }
@@ -30,7 +31,14 @@ function ResultContent(props){
 
     if(prob !== false){ // 확률 구하는데 성공한다면
         const outputProb = prob * 100;
-        const expectedCount = Math.round(1 / prob);
+        const expectedAverageCount = getAverageExpectedCount(prob);
+        const expectedMaximumCount = getMaximumExpectedCount(prob);
+        const averageGold = expectedAverageCount * price;
+        const maximumGold = expectedMaximumCount * price;
+
+        const CANNOT_CALCULATE = "계산 불가"
+        const ROUND_DIGIT = (getRoundDigit(outputProb) + 4) % 20;
+
         return(
             <div className="resultTableCell">
                     <p>
@@ -41,14 +49,15 @@ function ResultContent(props){
                         개당 가격: 
                         <InputPrice placeholder={price} onChange={onChangePrice}></InputPrice>
                     </div>
-                    <p>1회 당 등장 확률: {outputProb.toFixed(ROUND_DIGIT)}%</p>
-                    <p>예상 소모 개수: {expectedCount}개</p>
-                    <p>기대 Gold: {(expectedCount * price).toLocaleString()}</p>
+                    <p>1회 당 등장 확률: {outputProb.toFixed(ROUND_DIGIT) + "%"}</p>
+                    <p>평균 기대 개수: {isFinite(expectedAverageCount) ? moneyToString(expectedAverageCount) + "개": CANNOT_CALCULATE}</p>
+                    <p>상위 99% 개수: {isFinite(expectedMaximumCount) ? moneyToString(expectedMaximumCount) + "개": CANNOT_CALCULATE}</p>
+                    <p>평균 기대 Gold: {isFinite(averageGold) ? moneyToString(averageGold) + " Gold": CANNOT_CALCULATE}</p>
+                    <p>상위 99% Gold: {isFinite(maximumGold) ? moneyToString(maximumGold) + " Gold": CANNOT_CALCULATE}</p>
             </div>
         )
     }
     return(
-
         <div className="resultTableCell">
             <p>
                 <img className="toolImg" src={srcImg} alt="toolImg"></img>

@@ -21,17 +21,17 @@ nav, section, aside {
     height: 120vh;
 }
 nav{
-    width: 12vw;
+    width: 27vw;
 }
 section {
-    width: 76vw; 
+    width: 46vw; 
 }
 aside {
-    width: 12vw;
+    width: 27vw;
 }
 footer {
     height: 9vh;
-    position: relatiev;
+    position: relative;
     clear: both;
 }
 article {

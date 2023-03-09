@@ -6,7 +6,8 @@ function checkTable(table, rank, item, race){
     if(   
         table.hasOwnProperty(RANK) &&
         table[RANK].hasOwnProperty(ITEM) &&
-        table[RANK][ITEM].hasOwnProperty(RACE)
+        table[RANK][ITEM].hasOwnProperty(RACE) &&
+        Object.keys(table[RANK][ITEM][RACE]).length > 0
     )
         return true;
     else

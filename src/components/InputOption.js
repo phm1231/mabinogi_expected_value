@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import SelectList from "./SelectList";
 import SelectOptions from "./SelectOptions";
 import "./component.css";
-import makeOption from "../module/makeOption";
-import ShowResult from "./showResult";
+import hasDuplicate from "../module/hasDuplicate";
+import ShowResult from "./ShowResult";
 import subBtnImg from "../img/sub.png"
 import addBtnImg from "../img/add.png"
 import getTable from "../module/callAPI";
@@ -35,11 +35,8 @@ function InputOption(props){
     }, [])
 
     useEffect(()=>{
-        if(
-            itemType !== "itemType" && race !== "race" && rank !== "rank" &&
+        if( itemType !== "itemType" && race !== "race" && rank !== "rank" &&
             ( checkTable(oldTable, rank, itemType, race) || checkTable(newTable, rank, itemType, race) ))
-//            (oldTable[rank][itemType][race] !== undefined || newTable[rank][itemType][race] !== undefined ))
-//            Object.keys(table[toolNames[0]][rank][itemType][race]).length > 1)
             {
                 setVisible(true);
             }
@@ -95,18 +92,24 @@ function InputOption(props){
     }
 
     const onChangeItemType = (value) =>{
-        initOptions();        
-        setItemType(value);
+        if(itemType !== value){
+            initOptions();
+            setItemType(value);
+        }
     }
 
     const onChangeRace = (value) =>{
-        initOptions();
-        setRace(value);
+        if(race !== value){
+            initOptions();
+            setRace(value);
+        }
     }
 
     const onChangeRank = (value) =>{
-        initOptions();
-        setRank(value);
+        if(rank !== value){
+            initOptions();
+            setRank(value);
+        }
     }
 
     const onSubmit = () =>{   
@@ -114,6 +117,9 @@ function InputOption(props){
     }
 
     const onOpenModal = () =>{
+        if(optionArr.length === levelArr.length &&
+            optionArr.length !== 0 && levelArr.length !== 0 &&
+            !levelArr.includes("") && !hasDuplicate(optionArr))
         setIsOpen(true);
     }
     
@@ -127,7 +133,7 @@ function InputOption(props){
             <ShowResult isOpen={isOpen} onClose={onCloseModal} 
                 Info={{"rank": rank, "item": itemType, "race": race, "options": optionArr, "levels": levelArr}}>
             </ShowResult>
-            <div>
+            <div className="Box">
                 <h3>옵션 설정</h3>
                 <div className="Box">
                     <div className="optionSettingBox">
@@ -153,8 +159,8 @@ function InputOption(props){
                             </div>
                         ))}
                         <div className="buttonContainer">
-                            <button className="iconBtn" onClick={addCount}><img className="btnImg" src={addBtnImg}/></button>
-                            <button className="iconBtn" onClick={subCount}><img className="btnImg" src={subBtnImg}/></button>
+                            <button className="iconBtn" onClick={addCount}><img className="btnImg" alt="+" src={addBtnImg}/></button>
+                            <button className="iconBtn" onClick={subCount}><img className="btnImg" alt="-" src={subBtnImg}/></button>
                         </div>
                     </div>
                     <div className="wrapperBtn">

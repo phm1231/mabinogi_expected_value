@@ -1,8 +1,8 @@
 import React from "react";
-import ResultContent from "./resultContent";
+import ResultContent from "./ResultContent";
 import {ToolnamesForAPI, Toolnames} from "../data/tools";
 
-function resultTable(props){
+function ResultTable(props){
     const Info = props.Info;
     return(
         <div className="resultTable">
@@ -22,4 +22,4 @@ function resultTable(props){
     )
 }
 
-export default resultTable;
+export default ResultTable;
