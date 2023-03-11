@@ -22,12 +22,13 @@ function ResultContent(props){
             setPrice(getPrice(toolname));
         }
         fetchData();
-    }, [])
+    }, [toolname, toolnameForAPI, Info])
 
 
     const onChangePrice = (value)=>{
         setPrice(value);
     }
+
 
     if(prob !== false){ // 확률 구하는데 성공한다면
         const outputProb = prob * 100;

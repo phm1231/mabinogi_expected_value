@@ -48,7 +48,7 @@ function SelectOption(props){
 
     return(
         <div>
-            <SelectList content="option" placeholder="아이템 옵션" 
+            <SelectList content="option" placeholder="아이템 옵션을 선택해주세요." 
                 index={props.index}
                 value={selectedOption}
                 setValue={onChangeOption}

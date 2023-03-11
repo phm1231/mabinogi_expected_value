@@ -9,7 +9,7 @@ import races from "../data/races";
 const selectStyles = {
     control: (base, state) => ({
       ...base,
-      width: "20vw",
+      width: "inherit",
     }),
   };
 
