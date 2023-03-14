@@ -8,9 +8,7 @@ function normalization(str){
 }
 
 router.get("/:toolname", (req, res)=>{
-
     let toolname = normalization(req.params.toolname.toLowerCase()) || 0;
-
     if(!Object.keys(toolnames).includes(toolname.toUpperCase())){
         res.status(404).send("Not toolname");
         return;

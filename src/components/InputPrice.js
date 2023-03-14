@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import './component.css';
 
 function InputPrice(props){

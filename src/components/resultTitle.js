@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import { postOption } from "../module/callAPI";
+import React from "react";
+// import { postOption } from "../module/callAPI";
 
 function ResultTitle(props){
     const options = props.Info.options;
@@ -7,11 +7,11 @@ function ResultTitle(props){
     const rank = props.Info.rank;
     const item = props.Info.item;
     const race = props.Info.race;
-
+/* 추후 업데이트 예정
     useEffect(()=>{
         postOption(rank, item, race, options, levels);
     }, [])
-
+*/
     return(
         <div className="resultTitle">
             <p className="resultTitleContent">{rank} / {item} / {race}</p>

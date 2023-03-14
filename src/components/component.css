@@ -143,7 +143,6 @@ input[type=text]{
     margin: auto;
     width: inherit;
     height: 16%;
-    border: 3px solid blue;
     text-align: center;
 }
 
@@ -154,7 +153,6 @@ input[type=text]{
 
 .resultTable{
     margin: auto;
-    border: 3px solid red;
     background-color: white;
     width: inherit;
     height: 84%;
