@@ -25,5 +25,4 @@ yarn-error.log*
 # my
 /data
 /src/data
-/src/img
 /server/data
