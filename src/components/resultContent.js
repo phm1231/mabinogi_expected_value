@@ -47,7 +47,7 @@ function ResultContent(props){
                         {toolname}
                     </p>
                     <div>
-                        개당 가격: 
+                        개당 Gold: 
                         <InputPrice placeholder={price} onChange={onChangePrice}></InputPrice>
                     </div>
                     <p>1회 당 등장 확률: {outputProb.toFixed(ROUND_DIGIT) + "%"}</p>

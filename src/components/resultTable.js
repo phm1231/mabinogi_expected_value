@@ -18,6 +18,10 @@ function ResultTable(props){
                 <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[4]} toolname={Toolnames[4]}></ResultContent>
                 <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[5]} toolname={Toolnames[5]}></ResultContent>
             </div>
+            <div className="resultTableRow">
+                <ResultContent Info={Info} toolnameForAPI={ToolnamesForAPI[6]} toolname={Toolnames[6]}></ResultContent>
+                <div className="resultTableCell"></div>
+            </div>
         </div>
     )
 }

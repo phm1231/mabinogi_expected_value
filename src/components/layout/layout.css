@@ -1,7 +1,7 @@
 body {
     text-align: center;
-    color: black;
-    width: 900px;
+    background-color: whitesmoke;
+    overflow-x: hidden;
 }
 div#wapper {
     width: 100vw;
@@ -14,7 +14,8 @@ header, footer, nav, aside, section {
     background-color: whitesmoke
 }
 header {
-    height: 9vh;
+    height: 10vh;
+    text-align: center;
 }
 nav, section, aside {
     float: left;

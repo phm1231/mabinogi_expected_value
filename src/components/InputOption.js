@@ -134,7 +134,7 @@ function InputOption(props){
                 Info={{"rank": rank, "item": itemType, "race": race, "options": optionArr, "levels": levelArr}}>
             </ShowResult>
             <div className="Box">
-                <h3>옵션 설정</h3>
+                <h3 className="optionTitle">옵션 설정</h3>
                 <div className="Box">
                     <div className="optionSettingBox">
                         <SelectList content="rank" placeholder="랭크" setValue={onChangeRank}></SelectList>
@@ -146,7 +146,7 @@ function InputOption(props){
             {
                 visible &&
                 <div className="Box">
-                    <h3>옵션 선택</h3>
+                    <h3 className="optionTitle">옵션 선택</h3>
                     <div className="optionSelectBox">
                         {countList && countList.map((item, i) => (
                             <div key={i} className="optionSelectItem">
