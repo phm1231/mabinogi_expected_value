@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json;charset=UTF-8' }));
 
-app.use('/probs', router);
-app.use('/options', option);
+app.use('/api/probs', router);
+app.use('/api/options', option);
 
 app.listen(port, ()=>{
     console.log(`express is running on ${port}`);

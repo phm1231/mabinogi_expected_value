@@ -1,12 +1,12 @@
 import axios from 'axios';
-
+/*
 const headers = {
     'Content-Type': 'application/json',
     // 'Authorization': 'Basic ' + api_key ~~
 }
-
+*/
 export default async function getTable(toolname, rank=undefined, item=undefined, race=undefined){
-    const res = await axios.get("/probs/" + toolname, {
+    const res = await axios.get("/api/probs/" + toolname, {
         params:{
             "rank": rank,
             "item": item,
@@ -17,7 +17,7 @@ export default async function getTable(toolname, rank=undefined, item=undefined,
 }
  
 export async function getOption(rank, item, race){
-    const res = await axios.get("/options", {
+    const res = await axios.get("/api/options", {
         params:{
             "rank": rank,
             "item": item,
