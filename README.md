@@ -43,7 +43,9 @@ https://mabinogi.nexon.com/page/news/notice_view.asp?id=4889246
 
 ## 업데이트 내역
 
-2023.03.?? 배포 시작
+**http://mabitool.live**
+
+2023.03.16 배포 시작
 
 ## 기타 내용
 
