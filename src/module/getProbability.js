@@ -1,6 +1,5 @@
 import getTable from "./callAPI";
 
-// 1개의 옵션이 level 이상 등장할 확률.
 function getProb(probTable, level){
   try{
     const appearanceProb = Number(probTable["0"].replace("%", ""));
@@ -17,24 +16,34 @@ function getProb(probTable, level){
     for(; idx < keys.length; idx++){
       sumofLevelProb += Number(probTable[keys[idx]].replace("%", ""));
     }
-    return appearanceProb*sumofLevelProb; // / 10000; // (등장확률*0.01) * (레벨확률*0.01)
+    return [appearanceProb, sumofLevelProb];
     
   }catch(e){
     console.log("getProbability error, ", e);
-    return false;
+    return [false, false];
   }
 }
 
-function getFinalProb(probs){
-  const weight = probs.length % 3 * 3; // 옵션의 개수가 1이면 3, 2이면 6, 3이면 0
+function getFinalProb(option_probs, level_probs){
+  const weight = option_probs.length > 1 ? 6 : 3;
   const KEEP = 1000000000000; // 1조
-  let result = probs[0];
-  for(let i=1; i<probs.length; i++){
-      result = Math.floor(result * probs[i] * KEEP) / KEEP;
+
+  let sumofOptionProbs = 0;
+  for(let i=0; i<option_probs.length; i++) sumofOptionProbs += option_probs[i];
+
+  for(let i=option_probs.length; i<3; i++){
+      option_probs.push(100-sumofOptionProbs);
+      level_probs.push(100);
+  }
+
+  let result = option_probs[0] * level_probs[0];
+  for(let i=1; i<3; i++){
+      let tmp = option_probs[i] * level_probs[i];
+      result = Math.floor(result * tmp * KEEP) / KEEP;
   }
   
-  if(weight !== 0) result *= weight;
-  result = result / (Math.pow(10000, probs.length));
+  result *= weight;
+  result = result / (Math.pow(10000, option_probs.length));
   return result;
 }
 
@@ -60,15 +69,17 @@ export function getMaximumExpectedCount(prob){
 
 export async function getProbability(toolnameForAPI, Info){
     const table = await getTable(toolnameForAPI, Info.rank, Info.item, Info.race);
-    const probs = [];
+    const option_probs = [];
+    const level_probs = [];
     // 옵션 별 등장 확률
     for(let idx in Info.options){
-      const prob = getProb(table[Info.options[idx]], Info.levels[idx]);
+      let [prob, level] = getProb(table[Info.options[idx]], Info.levels[idx]);
       if(prob === false){
         return false; // 등장하지 않는 옵션이 포함
       }
-      probs.push(prob)
+      option_probs.push(prob);
+      level_probs.push(level);
     }
     // 옵션이 함께 등장할 확률
-    return getFinalProb(probs);
+    return getFinalProb(option_probs, level_probs);
 }
